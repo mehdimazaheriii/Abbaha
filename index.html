@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0756a5">
+<link rel="manifest" href="manifest.webmanifest">
+<title>آب‌بهایار | محاسبه‌گر آب‌بها</title>
+<style>
+:root{--navy:#063b78;--blue:#0878d1;--cyan:#38bde8;--pale:#eaf6ff;--ink:#12345b}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(160deg,#0475c9,#dff3ff 48%,#f8fcff);color:var(--ink);min-height:100vh}
+header{padding:24px 18px 30px;color:white;background:radial-gradient(circle at 15% 15%,#53d4f2,transparent 35%),linear-gradient(130deg,#063b78,#087bd0);border-radius:0 0 30px 30px;box-shadow:0 8px 24px #064b8833}
+.brand{display:flex;align-items:center;gap:14px}.logo{width:70px;height:70px;border:3px solid #d9f6ff;border-radius:50% 50% 50% 8px;transform:rotate(-45deg);display:grid;place-items:center;background:#ffffff18;box-shadow:inset 0 0 15px #fff6}.logo span{transform:rotate(45deg);font-size:38px}
+h1{font-size:25px;margin:0 0 7px}header p{margin:0;color:#e0f6ff;font-size:12px;line-height:1.8}
+main{max-width:720px;margin:-12px auto 30px;padding:0 13px}.card{background:#ffffffed;border:1px solid #fff;border-radius:19px;padding:16px;margin:14px 0;box-shadow:0 7px 22px #075da51c}
+h2{font-size:16px;color:#0756a5;margin:0 0 15px;display:flex;align-items:center;gap:8px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:12px;font-weight:bold;margin:0 0 7px;color:#284d73}
+input,select{width:100%;padding:12px 10px;border:1px solid #a8cbed;border-radius:11px;background:#f8fcff;color:#12345b;font:14px Tahoma;outline:none}
+input:focus,select:focus{border-color:#0878d1;box-shadow:0 0 0 3px #0878d122}
+.field{margin-bottom:12px}.wide{grid-column:1/-1}
+.segment{display:flex;gap:9px}.segment label{flex:1;border:1px solid #a8cbed;padding:11px;border-radius:11px;text-align:center;background:#f8fcff;cursor:pointer;margin:0}.segment input{width:auto;accent-color:#0878d1}
+button{width:100%;border:0;border-radius:14px;padding:15px;background:linear-gradient(90deg,#064b9a,#078bd8);color:white;font:bold 17px Tahoma;box-shadow:0 5px 13px #0756a544;cursor:pointer}
+.note{font-size:11px;line-height:1.9;color:#315678;background:#eaf6ff;border-radius:12px;padding:12px}
+.result{display:none;border:1px solid #9bcdf4;background:#f3faff;border-radius:15px;padding:15px;margin-top:14px}.amount{font-size:25px;font-weight:bold;color:#0756a5;margin:8px 0}.muted{font-size:11px;color:#58738d;line-height:1.8}
+footer{text-align:center;color:#e9f7ff;font-size:11px;padding:10px 15px 25px}
+@media(max-width:430px){.grid{grid-template-columns:1fr 1fr}h1{font-size:22px}.logo{width:60px;height:60px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo"><span>💧</span></div><div><h1>آب‌بهایار</h1><p>سامانه برآورد آب‌بهای مشترکین آب و فاضلاب کشور</p></div></div></header>
+<main>
+<section class="card">
+<h2>📍 ۱. مشخصات جغرافیایی</h2>
+<div class="grid">
+<div class="field wide"><label for="province">استان</label><select id="province"></select></div>
+<div class="field wide"><label>نوع منطقه</label><div class="segment"><label><input type="radio" name="area" value="شهری" checked> شهری</label><label><input type="radio" name="area" value="روستایی"> روستایی</label></div></div>
+</div>
+</section>
+<section class="card">
+<h2>👥 ۲. مشخصات اشتراک</h2>
+<div class="grid">
+<div class="field"><label for="usage">نوع کاربری</label><select id="usage"><option>مسکونی</option><option>تجاری</option><option>اداری</option><option>صنعتی</option><option>عمومی</option><option>آموزشی</option><option>درمانی</option><option>فرهنگی</option><option>مذهبی</option><option>کشاورزی</option><option>ساخت‌وساز</option><option>سایر</option></select></div>
+<div class="field"><label for="units">تعداد واحد</label><input id="units" type="number" min="1" value="1"></div>
+<div class="field"><label for="meter">قطر کنتور</label><select id="meter"><option>نیم اینچ</option><option>سه‌چهارم اینچ</option><option>یک اینچ</option><option>یک‌ونیم اینچ</option><option>دو اینچ</option><option>سه اینچ</option><option>چهار اینچ</option><option>بالاتر از چهار اینچ</option></select></div>
+<div class="field"><label>وضعیت فاضلاب</label><select id="sewage"><option value="yes">دارای شبکه</option><option value="no">فاقد شبکه</option></select></div>
+</div>
+</section>
+<section class="card">
+<h2>📊 ۳. اطلاعات مصرف و نرخ</h2>
+<div class="grid">
+<div class="field"><label for="days">دوره محاسبه (روز)</label><select id="days"><option>30</option><option>45</option><option>60</option><option>90</option></select></div>
+<div class="field"><label for="volume">مصرف آب (مترمکعب)</label><input id="volume" type="number" min="0" step="0.1" value="20"></div>
+<div class="field"><label for="rate">نرخ برآوردی هر مترمکعب (ریال)</label><input id="rate" type="number" min="0" value="143000"></div>
+<div class="field"><label for="sewageRate">درصد فرضی فاضلاب</label><input id="sewageRate" type="number" min="0" max="100" value="0"></div>
+</div>
+<p class="muted">نرخ ۱۴۳٬۰۰۰ ریال صرفاً نرخ غیریارانه‌ای اعلام‌شده است و تعرفه عمومی همه مشترکان محسوب نمی‌شود. برای محاسبه پلکانی و رسمی، جداول کامل مصوب باید به برنامه افزوده شوند. درصد فاضلاب نیز در این نسخه توسط کاربر تعیین می‌شود.</p>
+<button id="calc">محاسبه برآوردی آب‌بها</button>
+<div class="result" id="result" aria-live="polite">
+<strong>نتیجه برآورد</strong><div class="amount" id="total">۰ ریال</div>
+<div id="details" class="muted"></div>
+</div>
+</section>
+<section class="card">
+<h2>ℹ️ الگوی مصرف و راهنما</h2>
+<div class="note">الگوی مصرف باید بر اساس مصوبات رسمی و متناسب با استان، شهری یا روستایی بودن و تعداد واحدها تعیین شود. انتخاب استان همدان در این نسخه ثبت می‌شود، اما الگوی اختصاصی همدان هنوز به‌صورت عددی در موتور محاسبه بارگذاری نشده است.</div>
+</section>
+<section class="card">
+<h2>🛡️ سلب مسئولیت محاسباتی</h2>
+<div class="note">خروجی این برنامه صرفاً برآوردی و جهت اطلاع‌رسانی است و صورتحساب رسمی صادرشده توسط شرکت آب و فاضلاب ملاک پرداخت خواهد بود. نتیجه حاضر جایگزین سامانه‌های رسمی، مصوبات تعرفه‌ای یا بررسی شرکت آب و فاضلاب نیست.</div>
+</section>
+</main>
+<footer>آب‌بهایار • نسخه اولیه نمایشی • ۱۴۰۵</footer>
+<script>
+const provinces=["آذربایجان شرقی","آذربایجان غربی","اردبیل","اصفهان","البرز","ایلام","بوشهر","تهران","چهارمحال و بختیاری","خراسان جنوبی","خراسان رضوی","خراسان شمالی","خوزستان","زنجان","سمنان","سیستان و بلوچستان","فارس","قزوین","قم","کردستان","کرمان","کرمانشاه","کهگیلویه و بویراحمد","گلستان","گیلان","لرستان","مازندران","مرکزی","هرمزگان","همدان","یزد"];
+const p=document.getElementById('province');provinces.forEach(x=>{let o=document.createElement('option');o.textContent=x;o.value=x;p.appendChild(o)});p.value="همدان";
+const fmt=n=>Math.round(n).toLocaleString('fa-IR');
+document.getElementById('calc').addEventListener('click',()=>{
+ const v=Number(document.getElementById('volume').value),r=Number(document.getElementById('rate').value),s=Number(document.getElementById('sewageRate').value),d=Number(document.getElementById('days').value),u=Math.max(1,Number(document.getElementById('units').value)||1);
+ if(!Number.isFinite(v)||v<0||!Number.isFinite(r)||r<0||!Number.isFinite(s)||s<0||s>100){alert('لطفاً مقادیر معتبر وارد کنید.');return}
+ const water=v*r,sew=document.getElementById('sewage').value==='yes'?water*s/100:0,total=water+sew;
+ document.getElementById('total').textContent=fmt(total)+' ریال';
+ document.getElementById('details').textContent=`استان: ${p.value} | منطقه: ${document.querySelector('input[name="area"]:checked').value} | کاربری: ${document.getElementById('usage').value} | مصرف: ${fmt(v)} مترمکعب در ${fmt(d)} روز | تعداد واحد: ${fmt(u)} | آب‌بها: ${fmt(water)} ریال | برآورد فاضلاب: ${fmt(sew)} ریال. این محاسبه ساده و غیرپلکانی است.`;
+ document.getElementById('result').style.display='block';
+});
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>
